@@ -30,8 +30,8 @@ stages:
       inputs:
         command: 'test'
         projects: '**/*Tests.csproj'
-- stage: BuildDockerImage
-  displayName: Build and push Docker image
+- stage: BuildDockerImageAPI
+  displayName: Build and push API Docker image
   jobs:  
   - job: Build
     displayName: Build
@@ -44,6 +44,40 @@ stages:
         repository: 'paymentgateway-api'
         command: 'buildAndPush'
         Dockerfile: '$(Build.SourcesDirectory)/PaymentGateway.Api/Dockerfile'
+        tags: |
+          $(Build.BuildId)
+          latest
+- stage: BuildDockerImageMerchant
+  displayName: Build and push merchant Docker image
+  jobs:  
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'PaymentGateway'
+        repository: 'paymentgateway-merchant'
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/PaymentGateway.Merchant/Dockerfile'
+        tags: |
+          $(Build.BuildId)
+          latest
+- stage: BuildDockerImageBank
+  displayName: Build and push bank Docker image
+  jobs:  
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'PaymentGateway'
+        repository: 'paymentgateway-bank'
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/PaymentGateway.Bank/Dockerfile'
         tags: |
           $(Build.BuildId)
           latest
