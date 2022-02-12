@@ -43,7 +43,7 @@ stages:
         containerRegistry: 'PaymentGateway'
         repository: 'paymentgateway-api'
         command: 'buildAndPush'
-        Dockerfile: '$(Build.SourcesDirectory)/PaymentGateway/PaymentGateway.Api/Dockerfile'
+        Dockerfile: '$(Build.SourcesDirectory)/PaymentGateway.Api/Dockerfile'
         tags: |
           '$(Build.BuildId)'
           latest
