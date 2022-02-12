@@ -13,8 +13,25 @@ variables:
   vmImageName: 'ubuntu-latest'
 
 stages:
-- stage: Build
-  displayName: Build and push stage
+- stage: BuildSolution
+  displayName: Build solution
+  jobs:
+  - job: Build
+    displayName: Build
+    steps:
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'build'
+        projects: '**/*.csproj'
+  - job: Test
+    displayName: Test
+    steps:
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'test'
+        projects: '**/*Tests.csproj'
+- stage: BuildDockerImage
+  displayName: Build and push Docker image
   jobs:  
   - job: Build
     displayName: Build
