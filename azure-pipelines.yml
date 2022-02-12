@@ -80,7 +80,7 @@ stages:
         containerRegistry: 'PaymentGateway'
         repository: 'paymentgateway-bank'
         command: 'buildAndPush'
-        Dockerfile: '$(Build.SourcesDirectory)/PaymentGateway.Bank/Dockerfile'
+        Dockerfile: '$(Build.SourcesDirectory)/PaymentGateway.BankSimulator/Dockerfile'
         tags: |
           $(Build.BuildId)
           latest

@@ -6,11 +6,11 @@ EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
-WORKDIR /
+WORKDIR /src
 COPY ["PaymentGateway.BankSimulator.csproj", "PaymentGateway.BankSimulator/"]
 RUN dotnet restore "PaymentGateway.BankSimulator/PaymentGateway.BankSimulator.csproj"
 COPY . .
-WORKDIR "/PaymentGateway.BankSimulator"
+WORKDIR "/src/PaymentGateway.BankSimulator"
 RUN dotnet build "PaymentGateway.BankSimulator.csproj" -c Release -o /app/build
 
 FROM build AS publish
