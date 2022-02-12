@@ -7,7 +7,7 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /
-COPY ["PaymentGateway.Api/PaymentGateway.Api.csproj", "PaymentGateway.Api/"]
+COPY ["PaymentGateway.Api.csproj", "PaymentGateway.Api/"]
 RUN dotnet restore "PaymentGateway.Api/PaymentGateway.Api.csproj"
 COPY . .
 WORKDIR "/PaymentGateway.Api"
