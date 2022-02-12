@@ -6,11 +6,11 @@ EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
-WORKDIR /
+WORKDIR /src
 COPY ["PaymentGateway.Api.csproj", "PaymentGateway.Api/"]
-RUN dotnet restore "PaymentGateway.Api/PaymentGateway.Api.csproj"
+RUN dotnet restore "PaymentGateway.Api.csproj"
 COPY . .
-WORKDIR "/PaymentGateway.Api"
+WORKDIR "/src/PaymentGateway.Api"
 RUN dotnet build "PaymentGateway.Api.csproj" -c Release -o /app/build
 
 FROM build AS publish

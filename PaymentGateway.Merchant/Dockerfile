@@ -6,11 +6,11 @@ EXPOSE 80
 EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
-WORKDIR /
+WORKDIR /src
 COPY ["PaymentGateway.Merchant.csproj", "PaymentGateway.Merchant/"]
-RUN dotnet restore "PaymentGateway.Merchant/PaymentGateway.Merchant.csproj"
+RUN dotnet restore "PaymentGateway.Merchant.csproj"
 COPY . .
-WORKDIR "/PaymentGateway.Merchant"
+WORKDIR "/src/PaymentGateway.Merchant"
 RUN dotnet build "PaymentGateway.Merchant.csproj" -c Release -o /app/build
 
 FROM build AS publish
