@@ -9,13 +9,6 @@ resources:
 - repo: self
 
 variables:
-  # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: ''
-  imageRepository: ''
-  containerRegistry: '.azurecr.io'
-  dockerfilePath: '$(Build.SourcesDirectory)/PaymentGateway/PaymentGateway.Api/Dockerfile'
-  tag: '$(Build.BuildId)'
-  
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
@@ -29,11 +22,11 @@ stages:
       vmImage: $(vmImageName)
     steps:
     - task: Docker@2
-      displayName: Build and push an image to container registry
       inputs:
-        command: buildAndPush
-        repository: $(imageRepository)
-        dockerfile: $(dockerfilePath)
-        containerRegistry: $(dockerRegistryServiceConnection)
+        containerRegistry: 'PaymentGateway'
+        repository: 'paymentgateway-api'
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/PaymentGateway/PaymentGateway.Api/Dockerfile'
         tags: |
-          $(tag)
+          '$(Build.BuildId)'
+          latest
