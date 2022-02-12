@@ -45,5 +45,5 @@ stages:
         command: 'buildAndPush'
         Dockerfile: '$(Build.SourcesDirectory)/PaymentGateway.Api/Dockerfile'
         tags: |
-          '$(Build.BuildId)'
+          $(Build.BuildId)
           latest
