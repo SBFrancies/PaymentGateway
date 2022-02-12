@@ -9,19 +9,29 @@ resources:
 - repo: self
 
 variables:
-  # Container registry service connection established during pipeline creation
-  dockerRegistryServiceConnection: ''
-  imageRepository: ''
-  containerRegistry: '.azurecr.io'
-  dockerfilePath: '$(Build.SourcesDirectory)/PaymentGateway/PaymentGateway.Api/Dockerfile'
-  tag: '$(Build.BuildId)'
-  
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
 stages:
-- stage: Build
-  displayName: Build and push stage
+- stage: BuildSolution
+  displayName: Build solution
+  jobs:
+  - job: Build
+    displayName: Build
+    steps:
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'build'
+        projects: '**/*.csproj'
+  - job: Test
+    displayName: Test
+    steps:
+    - task: DotNetCoreCLI@2
+      inputs:
+        command: 'test'
+        projects: '**/*Tests.csproj'
+- stage: BuildDockerImageAPI
+  displayName: Build and push API Docker image
   jobs:  
   - job: Build
     displayName: Build
@@ -29,11 +39,45 @@ stages:
       vmImage: $(vmImageName)
     steps:
     - task: Docker@2
-      displayName: Build and push an image to container registry
       inputs:
-        command: buildAndPush
-        repository: $(imageRepository)
-        dockerfile: $(dockerfilePath)
-        containerRegistry: $(dockerRegistryServiceConnection)
+        containerRegistry: 'PaymentGateway'
+        repository: 'paymentgateway-api'
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/PaymentGateway.Api/Dockerfile'
         tags: |
-          $(tag)
+          $(Build.BuildId)
+          latest
+- stage: BuildDockerImageMerchant
+  displayName: Build and push merchant Docker image
+  jobs:  
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'PaymentGateway'
+        repository: 'paymentgateway-merchant'
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/PaymentGateway.Merchant/Dockerfile'
+        tags: |
+          $(Build.BuildId)
+          latest
+- stage: BuildDockerImageBank
+  displayName: Build and push bank Docker image
+  jobs:  
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'PaymentGateway'
+        repository: 'paymentgateway-bank'
+        command: 'buildAndPush'
+        Dockerfile: '$(Build.SourcesDirectory)/PaymentGateway.Bank/Dockerfile'
+        tags: |
+          $(Build.BuildId)
+          latest
