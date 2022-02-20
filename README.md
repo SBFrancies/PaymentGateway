@@ -46,6 +46,7 @@ The API project consists of the following components:
 3) Azure table storage for storing logs
 4) A Redis cache for storing payment event information
 5) An OpenIDConnent (OIDC) compliant identity provider - in the test project Azure AD B2C is used
+6) Azure KeyVault for storing secret configuration data
 
 ## Dev environment
 
