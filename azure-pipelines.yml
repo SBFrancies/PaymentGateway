@@ -24,6 +24,7 @@ stages:
         command: 'build'
         projects: '**/*.csproj'
   - job: Test
+    dependsOn: Build
     displayName: Test
     steps:
     - task: DotNetCoreCLI@2
