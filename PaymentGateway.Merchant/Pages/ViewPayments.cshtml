@@ -1,4 +1,13 @@
 ﻿@page
 @model PaymentGateway.Merchant.Pages.ViewPaymentsModel
 @{
+     ViewData["Title"] = "Search payments";
+}
+
+
+@foreach(var payment in Model.Payments)
+{
+    <div>
+        <a  href="/Payment/@payment.Id">@payment.Id</a> @payment.CardNumber 
+    </div>
 }

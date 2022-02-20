@@ -1,4 +1,15 @@
-﻿@page
+﻿@page "{id}"
 @model PaymentGateway.Merchant.Pages.PaymentModel
 @{
+     ViewData["Title"] = "View payment";
 }
+
+<div>
+    <div>
+        <label asp-for="Payment.CardNumber"></label>
+    </div>
+    <div>
+        @Model.Payment.CardNumber
+    </div>
+
+</div>
