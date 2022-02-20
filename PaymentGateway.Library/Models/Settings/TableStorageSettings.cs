@@ -1,7 +1,5 @@
 ﻿using PaymentGateway.Library.Exceptions;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace PaymentGateway.Library.Models.Settings
 {

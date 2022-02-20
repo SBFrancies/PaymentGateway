@@ -1,5 +1,4 @@
 ﻿using PaymentGateway.Api.Data.Entities;
-using PaymentGateway.Api.Enums;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;

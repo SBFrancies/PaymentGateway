@@ -1,6 +1,4 @@
-﻿using PaymentGateway.Api.Enums;
-
-namespace PaymentGateway.Api.Models.Request
+﻿namespace PaymentGateway.Api.Models.Request
 {
     public class FetchPaymentsRequest
     {

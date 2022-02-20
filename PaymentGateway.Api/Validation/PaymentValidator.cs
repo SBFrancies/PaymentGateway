@@ -1,9 +1,6 @@
 ﻿using FluentValidation;
-using FluentValidation.Results;
 using Microsoft.AspNetCore.Authentication;
 using PaymentGateway.Api.Models.Request;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace PaymentGateway.Api.Validation
 {

@@ -8,7 +8,6 @@ using PaymentGateway.Api.Models.BankApi;
 using PaymentGateway.Api.Models.Request;
 using PaymentGateway.Api.Models.Response;
 using PaymentGateway.Library.Interface;
-using Serilog;
 using System;
 using System.Threading.Tasks;
 
@@ -92,8 +91,11 @@ namespace PaymentGateway.Api.Services
 
             if(apiResult == null)
             {
+                _ = EventStore.CreatePaymentEventAsync(id, PaymentStatus.FailedAtBank);
+
                 return new CreatePaymentResponse
                 {
+                    PaymentId = id,
                     Message = "Bank payment failed, please try again later",
                     Success = false,
                     Request = request,

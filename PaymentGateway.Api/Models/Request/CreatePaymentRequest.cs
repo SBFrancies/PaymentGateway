@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace PaymentGateway.Api.Models.Request
+﻿namespace PaymentGateway.Api.Models.Request
 {
     public class CreatePaymentRequest
     {

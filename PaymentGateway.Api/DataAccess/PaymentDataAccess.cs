@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PaymentGateway.Api.Data;
 using PaymentGateway.Api.Data.Entities;
-using PaymentGateway.Api.Enums;
 using PaymentGateway.Api.Interface;
 using System;
 using System.Collections.Generic;

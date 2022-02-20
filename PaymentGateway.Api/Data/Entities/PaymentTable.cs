@@ -1,5 +1,4 @@
-﻿using PaymentGateway.Api.Enums;
-using System;
+﻿using System;
 
 namespace PaymentGateway.Api.Data.Entities
 {

@@ -1,8 +1,4 @@
-﻿using System.Net;
-using System.Threading.Tasks;
-using Xunit;
-
-namespace PaymentGateway.IntegrationTests.Controllers
+﻿namespace PaymentGateway.IntegrationTests.Controllers
 {
     public class PaymentControllerTests
     {

@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PaymentGateway.BankSimulator.Interface;
-using PaymentGateway.BankSimulator.Models;
 using System;
 using System.Security.Claims;
 using System.Text;

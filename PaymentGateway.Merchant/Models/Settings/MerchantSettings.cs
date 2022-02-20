@@ -1,5 +1,4 @@
-﻿using PaymentGateway.Merchant.Interface;
-using System;
+﻿using System;
 
 namespace PaymentGateway.Merchant.Models.Settings
 {

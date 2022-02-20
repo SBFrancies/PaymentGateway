@@ -1,5 +1,4 @@
-﻿using PaymentGateway.Api.Interface;
-using PaymentGateway.Library.Exceptions;
+﻿using PaymentGateway.Library.Exceptions;
 using PaymentGateway.Library.Models.Settings;
 using System;
 
