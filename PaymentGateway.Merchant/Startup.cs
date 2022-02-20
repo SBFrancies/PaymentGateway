@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
@@ -42,6 +43,11 @@ namespace PaymentGateway.Merchant
             services.AddMicrosoftIdentityWebAppAuthentication(Configuration, $"Merchant:{Constants.AzureAdB2C}")
                     .EnableTokenAcquisitionToCallDownstreamApi(new string[] { "https://PaymentGatewayAD.onmicrosoft.com/f5fd2651-c11f-490b-9e81-f3933aa7a0ac/Payments.ReadWrite" })
                     .AddInMemoryTokenCaches();
+
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.Secure = CookieSecurePolicy.Always;
+            });
 
             services.AddControllers(options =>
             {
