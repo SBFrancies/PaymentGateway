@@ -45,8 +45,7 @@ stages:
         containerRegistry: 'PaymentGateway'
         repository: 'paymentgateway-api'
         command: 'buildAndPush'
-        Dockerfile: '$(Build.SourcesDirectory)/PaymentGateway.Api/Dockerfile'
-        buildContext: '$(Build.SourcesDirectory)'
+        Dockerfile: '$(Build.SourcesDirectory)/ApiDockerfile'
         tags: |
           $(Build.BuildId)
           latest
@@ -64,8 +63,7 @@ stages:
         containerRegistry: 'PaymentGateway'
         repository: 'paymentgateway-merchant'
         command: 'buildAndPush'
-        Dockerfile: '$(Build.SourcesDirectory)/PaymentGateway.Merchant/Dockerfile'
-        buildContext: '$(Build.SourcesDirectory)'
+        Dockerfile: '$(Build.SourcesDirectory)/MerchantDockerfile'
         tags: |
           $(Build.BuildId)
           latest
@@ -83,8 +81,7 @@ stages:
         containerRegistry: 'PaymentGateway'
         repository: 'paymentgateway-bank'
         command: 'buildAndPush'
-        Dockerfile: '$(Build.SourcesDirectory)/PaymentGateway.BankSimulator/Dockerfile'
-        buildContext: '$(Build.SourcesDirectory)'
+        Dockerfile: '$(Build.SourcesDirectory)/BankDockerfile'
         tags: |
           $(Build.BuildId)
           latest
