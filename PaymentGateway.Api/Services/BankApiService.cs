@@ -27,7 +27,7 @@ namespace PaymentGateway.Api.Services
         public async Task<CardPaymentResponse> MakeBankPaymentAsync(CardPaymentRequest request)
         {
             var body = new JsonContent(request);
-            var message = new HttpRequestMessage(HttpMethod.Post, "/CardPayment")
+            var message = new HttpRequestMessage(HttpMethod.Post, "CardPayment")
             {
                 Content = body,
             };
@@ -51,7 +51,7 @@ namespace PaymentGateway.Api.Services
         
         public async Task<bool> CheckBankHealthyAsync()
         {
-            var response = await Client.GetAsync("/health");
+            var response = await Client.GetAsync("health");
 
             return response.IsSuccessStatusCode;
         }

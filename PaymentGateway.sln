@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentGateway.IntegrationT
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentGateway.Merchant", "PaymentGateway.Merchant\PaymentGateway.Merchant.csproj", "{5371D2A1-C91E-4DB5-A161-B0BAAF3E3E58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PaymentGateway.Library", "PaymentGateway.Library\PaymentGateway.Library.csproj", "{BDA92931-643D-45CF-97B8-5ED55813B445}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PaymentGateway.Library", "PaymentGateway.Library\PaymentGateway.Library.csproj", "{BDA92931-643D-45CF-97B8-5ED55813B445}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
