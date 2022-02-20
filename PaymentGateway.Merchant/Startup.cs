@@ -46,6 +46,8 @@ namespace PaymentGateway.Merchant
 
             services.Configure<CookiePolicyOptions>(options =>
             {
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+                options.CheckConsentNeeded = context => true;
                 options.Secure = CookieSecurePolicy.Always;
             });
 
