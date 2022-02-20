@@ -87,17 +87,17 @@ namespace PaymentGateway.Merchant
                 app.UseHsts();
             }
 
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+
+            app.UseRouting();
+
             app.UseCookiePolicy(new CookiePolicyOptions
             {
                 Secure = CookieSecurePolicy.Always,
                 MinimumSameSitePolicy = SameSiteMode.None,
                 CheckConsentNeeded = context => true,
-            }); ;
-
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-
-            app.UseRouting();
+            });
 
             app.UseAuthentication();
             app.UseAuthorization();
