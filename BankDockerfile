@@ -8,10 +8,12 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:3.1 AS build
 WORKDIR /src
 
-COPY ["PaymentGateway.BankSimulator/PaymentGateway.BankSimulator.csproj", "PaymentGateway.BankSimulator/"]
+
+COPY ["PaymentGateway.Library/PaymentGateway.Library.csproj", "PaymentGateway/"]
+COPY ["PaymentGateway.BankSimulator/PaymentGateway.BankSimulator.csproj", "PaymentGateway/"]
 RUN dotnet restore "PaymentGateway.BankSimulator/PaymentGateway.BankSimulator.csproj"
 
-WORKDIR "/src/PaymentGateway.BankSimulator"
+WORKDIR "/src/PaymentGateway"
 COPY . .
 
 RUN dotnet build "PaymentGateway.BankSimulator.csproj" -c Release -o /app/build
