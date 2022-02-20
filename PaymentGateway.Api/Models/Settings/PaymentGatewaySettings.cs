@@ -23,7 +23,10 @@ namespace PaymentGateway.Api.Models.Settings
                 throw new InvalidConfigurationException(nameof(appsettings.SqlDbConnectionString), "SqlDbConnectionString cannot be null or empty");
             }
 
-            KeyVault = new KeyVaultSettings(appsettings.KeyVault);
+            if (appsettings.KeyVault != null)
+            {
+                KeyVault = new KeyVaultSettings(appsettings.KeyVault);
+            }
 
             if (appsettings.TableStorage != null)
             {
