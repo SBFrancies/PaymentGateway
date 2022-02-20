@@ -69,7 +69,7 @@ BankCode VARCHAR(100)
 
 ## Dev environment
 
-Each of the three web projects are hosted in an Azure dev environment. These are located at:
+Each of the three web projects are hosted in an Azure dev environment. The services are deployed as Azure App Services for containers using a CI/CD pipeline. These are located at:
 
 1) Payment Gateway API: https://paymentgatewaychallenge-api.azurewebsites.net/swagger
 
