@@ -20,7 +20,11 @@ namespace PaymentGateway.BankSimulator.Models.Settings
 
             ClientRepositoryFilePath = appsettings.ClientRepositoryFilePath;
             KeyVault = new KeyVaultSettings(appsettings.KeyVault);
-            TableStorage = new TableStorageSettings(appsettings.TableStorage);
+
+            if (appsettings.TableStorage != null)
+            {
+                TableStorage = new TableStorageSettings(appsettings.TableStorage);
+            }
         }
 
         public string ClientRepositoryFilePath { get; }

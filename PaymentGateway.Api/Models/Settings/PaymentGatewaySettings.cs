@@ -25,7 +25,12 @@ namespace PaymentGateway.Api.Models.Settings
             }
 
             KeyVault = new KeyVaultSettings(appsettings.KeyVault);
-            TableStorage = new TableStorageSettings(appsettings.TableStorage);
+
+            if (appsettings.TableStorage != null)
+            {
+                TableStorage = new TableStorageSettings(appsettings.TableStorage);
+            }
+
             Bank = new BankApiSettings(appsettings.Bank);
             Authentication = new AuthenticationSettings(appsettings.Authentication);
             EventStoreConnectionString = appsettings.EventStoreConnectionString;
