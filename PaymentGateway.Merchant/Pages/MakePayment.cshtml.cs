@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Identity.Web;
 using PaymentGateway.Merchant.Interface;
 using PaymentGateway.Merchant.Models.ApiModels;
 using System;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace PaymentGateway.Merchant.Pages
 {
+    [AuthorizeForScopes(ScopeKeySection = "https://PaymentGatewayAD.onmicrosoft.com/f5fd2651-c11f-490b-9e81-f3933aa7a0ac/Payments.ReadWrite")]
     public class MakePaymentModel : PageModel
     {
         private IGatewayApi GatewayApi {get;}
@@ -21,23 +23,26 @@ namespace PaymentGateway.Merchant.Pages
         [BindProperty]
         [Required]
         [Range(0.01, int.MaxValue)]
+        [DataType(DataType.Currency)]
         public decimal Amount { get; set; }
 
         [BindProperty]
         [CreditCard]
         [Required]
         [MaxLength(40)]
+        [DataType(DataType.CreditCard)]
         public string CardNumber { get; set; }
         
         [BindProperty]
         [Required]
         [MaxLength(100)]
+        [RegularExpression("^[a-zA-Z ]{1,100}$")]
         public string CardName { get; set; }
-        
+
         [BindProperty]
         [Range(1, 12)]
         [Required]
-        public int ExpiryMonth { get; set; }
+        public int ExpiryMonth { get; set; } = DateTime.UtcNow.Month;
 
         [BindProperty]
         [Required]
@@ -58,7 +63,7 @@ namespace PaymentGateway.Merchant.Pages
 
         [BindProperty]
         [MaxLength(50)]
-        [RegularExpression("^[a-zA-Z0-9]{0,50}$")]
+        [RegularExpression("^[a-zA-Z0-9 ]{0,50}$")]
         public string Reference { get; set; }
 
         public void OnGet()
@@ -87,7 +92,7 @@ namespace PaymentGateway.Merchant.Pages
 
             var result = await GatewayApi.PostAsync(createRequest);
 
-            return RedirectToPage("Payment", new {id = result.Id});
+            return RedirectToPage("Payment", new {id = result.PaymentId});
         }
     }
 }

@@ -4,12 +4,73 @@
      ViewData["Title"] = "View payment";
 }
 
-<div>
-    <div>
-        <label asp-for="Payment.CardNumber"></label>
+<div class="container">
+       <hr/>
+    <b>Payment details</b>
+       <hr/>
+        <div class="row">
+                    <div class="col-md-6">
+<div class="form-group">
+    <label asp-for="Payment.Payment.CardName" class="control-label"></label>:
+    <span>@Model.Payment.Payment.CardName</span>
     </div>
-    <div>
-        @Model.Payment.CardNumber
     </div>
+      <div class="col-md-6">
+    <div class="form-group">
+    <label asp-for="Payment.Payment.CardNumber" class="control-label"></label>:
+    <span>@Model.Payment.Payment.CardNumber</span>
+    </div>
+    </div>
+    </div>
+     <div class="row">
+           <div class="col-md-6">
+    <div class="form-group">
+    <label class="control-label">Expiry Date</label>:
+    <span>@Model.Payment.Payment.ExpiryMonth/@Model.Payment.Payment.ExpiryYear</span>
+    </div>
+        </div>
+      <div class="col-md-6">
+    <div class="form-group">
+    <label asp-for="Payment.Payment.Amount" class="control-label"></label>:
+    <span>@Model.Payment.Payment.Amount</span>
+    </div>
+        </div>
+    </div>
+     <div class="row">
+           <div class="col-md-6">
+    <div class="form-group">
+    <label asp-for="Payment.Payment.CurrencyCode" class="control-label"></label>:
+    <span>@Model.Payment.Payment.CurrencyCode</span>
+    </div>
+        </div>
+      <div class="col-md-6">
+     <div class="form-group">
+    <label asp-for="Payment.Payment.Reference" class="control-label"></label>:
+    <span>@Model.Payment.Payment.Reference</span>
+    </div>
+    </div>
+    </div>
+    <hr />
+    <b>Events</b>
+    <hr/>
+    <div class="row" style="font-weight:bold;">
+           <div class="col-md-6">
+    <span>Event</span>
+    </div>
+      <div class="col-md-6">
+    <span>TimeStamp</span>
+    </div>
+    </div>
+    @foreach(var e in Model.Payment.Events)
+    {
+        <div class="row">
+           <div class="col-md-6">
+    <span>@e.Status</span>
+    </div>
+      <div class="col-md-6">
+    <span>@e.TimeStamp</span>
+    </div>
+    </div>
+    }
 
-</div>
+    </div>

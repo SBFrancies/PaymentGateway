@@ -4,10 +4,21 @@
      ViewData["Title"] = "Search payments";
 }
 
-
+<div class="row" style="font-weight:bold;">
+        <div class="col-md-2"></div>
+         <div class="col-md-2"> Card Name</div>
+         <div class="col-md-3"> Card Number</div>
+         <div class="col-md-2"> Amount</div>
+         <div class="col-md-3"> Reference</div>
+    </div>
 @foreach(var payment in Model.Payments)
 {
-    <div>
-        <a  href="/Payment/@payment.Id">@payment.Id</a> @payment.CardNumber 
+    <hr/>
+    <div class="row">
+        <div class="col-md-2"> <a  href="/Payment/@payment.Id">View</a></div>
+         <div class="col-md-2"> @payment.CardName</div>
+         <div class="col-md-3"> @payment.CardNumber</div>
+         <div class="col-md-2"> @payment.Amount</div>
+         <div class="col-md-3"> @payment.Reference</div>
     </div>
 }

@@ -27,7 +27,7 @@ namespace PaymentGateway.Merchant.Apis
             Settings = settings ?? throw new ArgumentNullException(nameof(settings));
         }
 
-        public async Task<Payment> GetAsync(Guid id)
+        public async Task<PaymentResponse> GetAsync(Guid id)
         {
             var accessToken = await TokenAcquisition.GetAccessTokenForUserAsync(new[] { Settings.AzureAdB2C.AccessTokenScope });
             HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
@@ -38,7 +38,7 @@ namespace PaymentGateway.Merchant.Apis
 
             try
             {
-                var payment = JsonSerializer.Deserialize<Payment>(responseBody, SerialisationSettings.DefaultOptions);
+                var payment = JsonSerializer.Deserialize<PaymentResponse>(responseBody, SerialisationSettings.DefaultOptions);
                 return payment;
             }
 
@@ -48,7 +48,7 @@ namespace PaymentGateway.Merchant.Apis
             }
         }
 
-        public async Task<Payment> PostAsync(CreatePayment createPayment)
+        public async Task<NewPaymentResponse> PostAsync(CreatePayment createPayment)
         {
             var accessToken = await TokenAcquisition.GetAccessTokenForUserAsync(new[] { Settings.AzureAdB2C.AccessTokenScope });
             HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
@@ -63,7 +63,7 @@ namespace PaymentGateway.Merchant.Apis
 
             try
             {
-                var payment = JsonSerializer.Deserialize<Payment>(responseBody, SerialisationSettings.DefaultOptions);
+                var payment = JsonSerializer.Deserialize<NewPaymentResponse>(responseBody, SerialisationSettings.DefaultOptions);
                 return payment;
             }
 
@@ -83,8 +83,8 @@ namespace PaymentGateway.Merchant.Apis
 
             try
             {
-                var payments = JsonSerializer.Deserialize<Payment[]>(responseBody, SerialisationSettings.DefaultOptions);
-                return payments;
+                var payments = JsonSerializer.Deserialize<PaymentsResponse>(responseBody, SerialisationSettings.DefaultOptions);
+                return payments.Payments;
             }
 
             catch
