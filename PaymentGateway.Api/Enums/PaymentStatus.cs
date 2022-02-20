@@ -2,9 +2,10 @@
 {
     public enum PaymentStatus
     {
-        Success,
+        Uploaded,
         FailedValidation,
-        FailedAtBank,
         Processing,
+        FailedAtBank,
+        Success,
     }
 }

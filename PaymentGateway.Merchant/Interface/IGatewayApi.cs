@@ -1,5 +1,4 @@
-﻿using PaymentGateway.Api.Models.Request;
-using PaymentGateway.Merchant.Models;
+﻿using PaymentGateway.Merchant.Models.ApiModels;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -8,7 +7,7 @@ namespace PaymentGateway.Merchant.Interface
 {
     public interface IGatewayApi
     {
-        Task GetAsync(Guid id);
+        Task<Payment> GetAsync(Guid id);
 
         Task<Payment> PostAsync(CreatePayment createPayment);
 

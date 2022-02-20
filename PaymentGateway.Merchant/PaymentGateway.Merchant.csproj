@@ -11,8 +11,27 @@
     <PackageReference Include="Microsoft.AspNetCore.Authentication.AzureAD.UI" Version="3.1.22" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.AzureADB2C.UI" Version="3.1.22" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
-	  <PackageReference Include="Microsoft.Identity.Web" Version="1.22.2" />
-	  <PackageReference Include="Microsoft.Identity.Web.UI" Version="1.22.2" />
+	  <PackageReference Include="Microsoft.Identity.Web" Version="1.22.3" />
+	  <PackageReference Include="Microsoft.Identity.Web.UI" Version="1.22.3" />
+	  <PackageReference Include="FluentValidation.AspNetCore" Version="10.3.6" />
+	  <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+
+	  <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" Version="1.6.2" />
+	  <PackageReference Include="Microsoft.Extensions.Configuration.AzureKeyVault" Version="3.1.22" />
+	  <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.14.0" />
+	  <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
+	  <PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />
+	  <PackageReference Include="Serilog.Sinks.AzureTableStorage" Version="5.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PaymentGateway.Library\PaymentGateway.Library.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\lib\jquery\dist\jquery.js">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

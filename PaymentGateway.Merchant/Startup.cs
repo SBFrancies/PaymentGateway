@@ -17,6 +17,7 @@ using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
 using PaymentGateway.Merchant.Apis;
 using PaymentGateway.Merchant.Interface;
+using PaymentGateway.Merchant.Models.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +39,7 @@ namespace PaymentGateway.Merchant
         {
             services.AddDistributedMemoryCache();
 
-            services.AddMicrosoftIdentityWebAppAuthentication(Configuration, Constants.AzureAdB2C)
+            services.AddMicrosoftIdentityWebAppAuthentication(Configuration, $"Merchant:{Constants.AzureAdB2C}")
                     .EnableTokenAcquisitionToCallDownstreamApi(new string[] { "https://PaymentGatewayAD.onmicrosoft.com/f5fd2651-c11f-490b-9e81-f3933aa7a0ac/Payments.ReadWrite" })
                     .AddInMemoryTokenCaches();
 
@@ -49,6 +50,16 @@ namespace PaymentGateway.Merchant
                     .Build();
                 options.Filters.Add(new AuthorizeFilter(policy));
             }).AddMicrosoftIdentityUI();
+
+            var appsettings = new MerchantAppSettings();
+            Configuration.Bind("Merchant", appsettings);
+            var settings = new MerchantSettings(appsettings);
+
+            services.AddSingleton(settings);
+            services.AddHttpClient("PaymentGateway", a =>
+            {
+                a.BaseAddress = settings.PaymentGateway.BaseUrl;
+            });
 
             services.AddRazorPages();
             services.AddScoped<IGatewayApi, PaymentGatewayApi>();
@@ -71,30 +82,10 @@ namespace PaymentGateway.Merchant
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-
-            app.Use(async (context, next) =>
-            {
-                var auth = context.Request.Headers["Authorization"];
-
-                // Do work that doesn't write to the Response.
-                await next.Invoke();
-                // Do logging or other work that doesn't write to the Response.
-            });
-
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
-
-            app.Use(async (context, next) =>
-            {
-                var auth = context.Request.Headers["Authorization"];
-
-                // Do work that doesn't write to the Response.
-                await next.Invoke();
-                // Do logging or other work that doesn't write to the Response.
-            });
-
 
             app.UseEndpoints(endpoints =>
             {

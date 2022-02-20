@@ -2,3 +2,63 @@
 @model PaymentGateway.Merchant.Pages.MakePaymentModel
 @{
 }
+<form method="post">
+    <div asp-validation-summary=ModelOnly class="text-danger"></div>
+        <div class="row">
+                    <div class="col-md-6">
+<div class="form-group">
+    <label asp-for="CardName" class="control-label"></label><input asp-for="CardName" class="form-control"/>
+    <span asp-validation-for="CardName" class="text-danger"></span>
+    </div>
+    </div>
+      <div class="col-md-6">
+    <div class="form-group">
+    <label asp-for="CardNumber" class="control-label"></label><input asp-for="CardNumber" class="form-control"/>
+    <span asp-validation-for="CardNumber" class="text-danger"></span>
+    </div>
+    </div>
+    </div>
+     <div class="row">
+           <div class="col-md-6">
+    <div class="form-group">
+    <label asp-for="ExpiryMonth" class="control-label"></label><input asp-for="ExpiryMonth" class="form-control"/>
+    <span asp-validation-for="ExpiryMonth" class="text-danger"></span>
+    </div>
+        </div>
+      <div class="col-md-6">
+    <div class="form-group">
+    <label asp-for="ExpiryYear" class="control-label"></label><input asp-for="ExpiryYear" class="form-control"/>
+    <span asp-validation-for="ExpiryYear" class="text-danger"></span>
+    </div>
+    </div>
+        </div>
+     <div class="row">
+           <div class="col-md-6">
+    <div class="form-group">
+    <label asp-for="Cvv" class="control-label"></label><input asp-for="Cvv" class="form-control"/>
+    <span asp-validation-for="Cvv" class="text-danger"></span>
+    </div>
+        </div>
+      <div class="col-md-6">
+    <div class="form-group">
+    <label asp-for="Amount" class="control-label"></label><input asp-for="Amount" class="form-control"/>
+    <span asp-validation-for="Amount" class="text-danger"></span>
+    </div>
+        </div>
+    </div>
+     <div class="row">
+           <div class="col-md-6">
+    <div class="form-group">
+    <label asp-for="CurrencyCode" class="control-label"></label><input asp-for="CurrencyCode" class="form-control"/>
+    <span asp-validation-for="CurrencyCode" class="text-danger"></span>
+    </div>
+        </div>
+      <div class="col-md-6">
+     <div class="form-group">
+    <label asp-for="Reference" class="control-label"></label><input asp-for="Reference" class="form-control"/>
+    <span asp-validation-for="Reference" class="text-danger"></span>
+    </div>
+    </div>
+    </div>
+    <input type="submit" value="Make Payment">
+</form>

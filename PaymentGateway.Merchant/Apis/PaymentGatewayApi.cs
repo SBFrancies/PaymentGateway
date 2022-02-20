@@ -1,11 +1,13 @@
 ﻿using Microsoft.Identity.Web;
-using PaymentGateway.Api.Models.Request;
+using PaymentGateway.Library.Serialisation;
 using PaymentGateway.Merchant.Interface;
-using PaymentGateway.Merchant.Models;
+using PaymentGateway.Merchant.Models.ApiModels;
+using PaymentGateway.Merchant.Models.Settings;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace PaymentGateway.Merchant.Apis
@@ -13,30 +15,82 @@ namespace PaymentGateway.Merchant.Apis
     public class PaymentGatewayApi : IGatewayApi
     {
         private ITokenAcquisition TokenAcquisition { get; }
+        private HttpClient HttpClient { get; }
+        private MerchantSettings Settings { get; }
 
-        public PaymentGatewayApi(ITokenAcquisition tokenAcquisition)
+
+        public PaymentGatewayApi(ITokenAcquisition tokenAcquisition, IHttpClientFactory clientFactory, MerchantSettings settings)
         {
             TokenAcquisition = tokenAcquisition ?? throw new ArgumentNullException(nameof(tokenAcquisition));
+            HttpClient = clientFactory?.CreateClient("PaymentGateway") ?? throw new ArgumentNullException(nameof(clientFactory));
+            HttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            Settings = settings ?? throw new ArgumentNullException(nameof(settings));
         }
 
-        public async Task GetAsync(Guid id)
+        public async Task<Payment> GetAsync(Guid id)
         {
-            var client = new HttpClient();
-            var accessToken = await TokenAcquisition.GetAccessTokenForUserAsync(new[] { "https://PaymentGatewayAD.onmicrosoft.com/f5fd2651-c11f-490b-9e81-f3933aa7a0ac/Payments.ReadWrite" });
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            var accessToken = await TokenAcquisition.GetAccessTokenForUserAsync(new[] { Settings.AzureAdB2C.AccessTokenScope });
+            HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
-            var response = await client.GetAsync($"https://localhost:5002/Payment/{Guid.NewGuid()}");
+            var response = await HttpClient.GetAsync($"Payment/{id}");
+
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            try
+            {
+                var payment = JsonSerializer.Deserialize<Payment>(responseBody, SerialisationSettings.DefaultOptions);
+                return payment;
+            }
+
+            catch 
+            {
+                throw new Exception(responseBody);
+            }
         }
 
-        public Task<IEnumerable<Payment>> GetAsync(string cardNumber, string reference)
+        public async Task<Payment> PostAsync(CreatePayment createPayment)
         {
-            throw new NotImplementedException();
+            var accessToken = await TokenAcquisition.GetAccessTokenForUserAsync(new[] { Settings.AzureAdB2C.AccessTokenScope });
+            HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
+            var message = new HttpRequestMessage(HttpMethod.Post, "Payment")
+            {
+                Content = new JsonContent(createPayment),
+            };
+
+            var response = await HttpClient.SendAsync(message);
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            try
+            {
+                var payment = JsonSerializer.Deserialize<Payment>(responseBody, SerialisationSettings.DefaultOptions);
+                return payment;
+            }
+
+            catch
+            {
+                throw new Exception(responseBody);
+            }
         }
 
-        public Task<Payment> PostAsync(CreatePayment createPayment)
+        public async Task<IEnumerable<Payment>> GetAsync(string cardNumber, string reference)
         {
-            throw new NotImplementedException();
+            var accessToken = await TokenAcquisition.GetAccessTokenForUserAsync(new[] { Settings.AzureAdB2C.AccessTokenScope });
+            HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
+            var response = await HttpClient.GetAsync($"Payment?cardNumber={cardNumber}&reference={reference}");
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            try
+            {
+                var payments = JsonSerializer.Deserialize<Payment[]>(responseBody, SerialisationSettings.DefaultOptions);
+                return payments;
+            }
+
+            catch
+            {
+                throw new Exception(responseBody);
+            }
         }
     }
 }
