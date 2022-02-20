@@ -28,7 +28,7 @@ namespace PaymentGateway.Api.Controllers
         [Produces("application/json")]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.Forbidden)]
-        [ProducesResponseType(typeof(CreatePaymentResponse), (int)HttpStatusCode.OK)]
+        [ProducesResponseType(typeof(CreatePaymentResponse), (int)HttpStatusCode.Created)]
         [ProducesResponseType(typeof(CreatePaymentResponse), (int)HttpStatusCode.BadRequest)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.UnprocessableEntity)]
         [ProducesResponseType(typeof(ErrorResponse), (int)HttpStatusCode.InternalServerError)]
@@ -40,7 +40,7 @@ namespace PaymentGateway.Api.Controllers
 
                 if(response.Success)
                 {
-                    return Ok(response);
+                    return StatusCode((int)HttpStatusCode.Created, response);
                 }
 
                 else
@@ -70,7 +70,6 @@ namespace PaymentGateway.Api.Controllers
 
         [HttpGet]
         [Route("{id:guid}")]
-        [Consumes("application/json")]
         [Produces("application/json")]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.Forbidden)]
@@ -109,7 +108,6 @@ namespace PaymentGateway.Api.Controllers
         }
 
         [HttpGet]
-        [Consumes("application/json")]
         [Produces("application/json")]
         [ProducesResponseType((int)HttpStatusCode.Unauthorized)]
         [ProducesResponseType((int)HttpStatusCode.Forbidden)]

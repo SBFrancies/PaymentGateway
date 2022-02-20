@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PaymentGateway.IntegrationTests.FakeServices
 {
-    public class FakeUnhealthyankApi : IBankApi
+    public class FakeUnhealthyBankApi : IBankApi
     {
         public Task<bool> CheckBankHealthyAsync()
         {

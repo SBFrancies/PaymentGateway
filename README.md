@@ -95,3 +95,5 @@ Password: WE45wSxY
 4) Use something better than Azure Table Storage to be able to persist structured logs, maybe Seq or GreyLog
 
 5) Use Terraform or Pulumi or some other infrastructure as code to to build and tear down the infrastructure
+
+6) Add endpoints for other types of payment like Bank Transfers
