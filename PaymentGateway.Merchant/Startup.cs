@@ -88,12 +88,12 @@ namespace PaymentGateway.Merchant
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
-            app.UseRouting();
-
             app.UseCookiePolicy(new CookiePolicyOptions
             {
                 Secure = CookieSecurePolicy.Always
             });
+
+            app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
