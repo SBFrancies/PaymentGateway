@@ -50,7 +50,8 @@ The API project consists of the following components:
 
 ### Payments table schema
 
-```CREATE TABLE Payments
+```
+CREATE TABLE Payments
 (
 Id UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
 DateCreated DATETIMEOFFSET NOT NULL DEFAULT GETUTCDATE(),
@@ -63,7 +64,8 @@ ExpiryMonth TINYINT NOT NULL,
 ExpiryYear SMALLINT NOT NULL,
 Reference VARCHAR(50),
 BankCode VARCHAR(100)
-)```
+)
+```
 
 ## Dev environment
 
