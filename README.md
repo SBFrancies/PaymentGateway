@@ -48,6 +48,23 @@ The API project consists of the following components:
 5) An OpenIDConnent (OIDC) compliant identity provider - in the test project Azure AD B2C is used
 6) Azure KeyVault for storing secret configuration data
 
+### Payments table schema
+
+```CREATE TABLE Payments
+(
+Id UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+DateCreated DATETIMEOFFSET NOT NULL DEFAULT GETUTCDATE(),
+CreatedBy VARCHAR(200) NOT NULL,
+Amount DECIMAL(20,8) NOT NULL,
+CurrencyCode VARCHAR(10) NOT NULL,
+CardNumber VARCHAR(30) NOT NULL,
+CardName VARCHAR(100) NOT NULL,
+ExpiryMonth TINYINT NOT NULL,
+ExpiryYear SMALLINT NOT NULL,
+Reference VARCHAR(50),
+BankCode VARCHAR(100)
+)```
+
 ## Dev environment
 
 Each of the three web projects are hosted in an Azure dev environment. These are located at:
