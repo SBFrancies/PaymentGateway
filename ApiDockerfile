@@ -10,7 +10,7 @@ WORKDIR /src
 
 COPY ["PaymentGateway.Library/PaymentGateway.Library.csproj", "PaymentGateway/"]
 COPY ["PaymentGateway.Api/PaymentGateway.Api.csproj", "PaymentGateway/"]
-RUN dotnet restore "PaymentGateway.Api/PaymentGateway.Api.csproj"
+RUN dotnet restore "PaymentGateway/PaymentGateway.Api.csproj"
 
 WORKDIR "/src/PaymentGateway"
 COPY . .

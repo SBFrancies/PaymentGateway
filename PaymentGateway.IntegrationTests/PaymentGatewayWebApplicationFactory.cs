@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,7 +9,7 @@ using System.Linq;
 
 namespace PaymentGateway.IntegrationTests
 {
-    public class CustomWebApplicationFactory
+    public class PaymentGatewayWebApplicationFactory
     : WebApplicationFactory<Startup>
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
@@ -25,6 +26,10 @@ namespace PaymentGateway.IntegrationTests
                 {
                     options.UseInMemoryDatabase("InMemoryDbForTesting");
                 }, ServiceLifetime.Transient, ServiceLifetime.Singleton);
+
+                services.AddAuthentication("Test")
+                        .AddScheme<AuthenticationSchemeOptions, TestAuthenticationHandler>(
+                            "Test", options => { });
             });
         }
     }
