@@ -93,3 +93,5 @@ Password: WE45wSxY
 3) Upgrade the projects to .Net 6
 
 4) Use something better than Azure Table Storage to be able to persist structured logs, maybe Seq or GreyLog
+
+5) Use Terraform or Pulumi or some other infrastructure as code to to build and tear down the infrastructure
