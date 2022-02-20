@@ -42,11 +42,11 @@ namespace PaymentGateway.Merchant
 
             services.AddMicrosoftIdentityWebAppAuthentication(Configuration, $"Merchant:{Constants.AzureAdB2C}")
                     .EnableTokenAcquisitionToCallDownstreamApi(new string[] { "https://PaymentGatewayAD.onmicrosoft.com/f5fd2651-c11f-490b-9e81-f3933aa7a0ac/Payments.ReadWrite" })
-                    .AddInMemoryTokenCaches();
+                    .AddDistributedTokenCaches();
 
             services.Configure<CookiePolicyOptions>(options =>
             {
-                options.MinimumSameSitePolicy = SameSiteMode.Lax;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
                 options.CheckConsentNeeded = context => true;
                 options.Secure = CookieSecurePolicy.Always;
             });
@@ -90,8 +90,9 @@ namespace PaymentGateway.Merchant
             app.UseCookiePolicy(new CookiePolicyOptions
             {
                 Secure = CookieSecurePolicy.Always,
-                MinimumSameSitePolicy = SameSiteMode.Lax,
-            });
+                MinimumSameSitePolicy = SameSiteMode.None,
+                CheckConsentNeeded = context => true,
+            }); ;
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
