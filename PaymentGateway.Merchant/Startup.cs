@@ -46,7 +46,7 @@ namespace PaymentGateway.Merchant
 
             services.Configure<CookiePolicyOptions>(options =>
             {
-                options.MinimumSameSitePolicy = SameSiteMode.None;
+                options.MinimumSameSitePolicy = SameSiteMode.Lax;
                 options.CheckConsentNeeded = context => true;
                 options.Secure = CookieSecurePolicy.Always;
             });
@@ -87,14 +87,14 @@ namespace PaymentGateway.Merchant
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-
             app.UseCookiePolicy(new CookiePolicyOptions
             {
                 Secure = CookieSecurePolicy.Always,
-                MinimumSameSitePolicy = SameSiteMode.None,
+                MinimumSameSitePolicy = SameSiteMode.Lax,
             });
+
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
 
             app.UseRouting();
 
