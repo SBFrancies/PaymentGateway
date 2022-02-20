@@ -93,7 +93,7 @@ namespace PaymentGateway.Merchant
             app.UseCookiePolicy(new CookiePolicyOptions
             {
                 Secure = CookieSecurePolicy.Always,
-                MinimumSameSitePolicy = SameSiteMode.Strict,
+                MinimumSameSitePolicy = SameSiteMode.None,
             });
 
             app.UseRouting();
