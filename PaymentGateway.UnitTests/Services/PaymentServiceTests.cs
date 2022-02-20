@@ -12,6 +12,8 @@ using PaymentGateway.Library.Interface;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
+using Xunit;
 
 namespace PaymentGateway.UnitTests.Services
 {
@@ -28,6 +30,21 @@ namespace PaymentGateway.UnitTests.Services
         private readonly Mock<IBankStatusHolder> _mockBankStatusHolder = new Mock<IBankStatusHolder>();
         private readonly Mock<IMapper<PaymentTable, PaymentDetails>> _mockToDetailsMapper = new Mock<IMapper<PaymentTable, PaymentDetails>>();
         private readonly Mock<ISystemClock> _mockClock = new Mock<ISystemClock>();
+
+        [Fact]
+        public async Task PaymentService_FetchPaymentAsync_NoPaymentReturnsNull()
+        {
+            var id = Guid.NewGuid();
+            _mockPaymentDataAccess.Setup(a => a.GetPaymentAsync(id)).ReturnsAsync((PaymentTable)null);
+            var sut = GetSystemUnderTest();
+        
+            var result = await sut.FetchPaymentAsync(id);
+
+            Assert.Null(result);
+            _mockPaymentDataAccess.Verify(a => a.GetPaymentAsync(id), Times.Once);
+            _mockEventStore.Verify(a => a.GetPaymentEventsAsync(id), Times.Never);
+            _mockToDetailsMapper.Verify(a => a.Map(It.IsAny<PaymentTable>()), Times.Never);
+        }
 
 
         private PaymentService GetSystemUnderTest()

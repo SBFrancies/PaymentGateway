@@ -63,6 +63,7 @@ namespace PaymentGateway.BankSimulator
                     var tokenProvider = new AzureServiceTokenProvider();
                     var kvClient = new KeyVaultClient((authority, resource, scope) => tokenProvider.KeyVaultTokenCallback(authority, resource, scope));
                     builder.AddAzureKeyVault(keyVault, kvClient, new DefaultKeyVaultSecretManager());
+                    config = builder.Build();
                 }
 
                 var tableStoreConnectionString = config["BankSimulator:TableStorage:ConnectionString"];
