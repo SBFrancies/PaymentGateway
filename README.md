@@ -5,7 +5,7 @@ A solution containing a Payment Gateway API to make and retrieve payments. Teh s
 
 ## Requirements to run
 
-1) .Net Core 3.1
+1) .Net 7.0
 2) SQL Server
 3) An OpenIdConnect compliant identity provider (e.g. Azure AD B2C)
 4) Redis cache

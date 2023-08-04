@@ -50,8 +50,8 @@ namespace PaymentGateway.IntegrationTests
                       config.Sources.Clear();
                       config.AddInMemoryCollection(_config);
                   });
-                  webBuilder.UseSerilog().UseStartup<Startup>();
-              });
+                  webBuilder.UseStartup<Startup>();
+              }).UseSerilog();
         }
 
         protected override void ConfigureWebHost(IWebHostBuilder builder)

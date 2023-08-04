@@ -20,7 +20,7 @@ namespace PaymentGateway.Merchant.Controllers
         }
 
         [HttpGet("SignOut")]
-        public IActionResult SignOut()
+        public override SignOutResult SignOut()
         {
             return SignOut(
                  new AuthenticationProperties

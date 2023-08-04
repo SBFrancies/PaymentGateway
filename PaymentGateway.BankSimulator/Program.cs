@@ -48,7 +48,6 @@ namespace PaymentGateway.BankSimulator
             .ConfigureWebHostDefaults(webBuilder =>
             {
                 webBuilder.UseStartup<Startup>();
-                webBuilder.UseSerilog();
             })
             .ConfigureAppConfiguration((ctx, builder) =>
             {
@@ -74,6 +73,7 @@ namespace PaymentGateway.BankSimulator
                    .WriteTo.AzureTableStorage(tableStoreConnectionString, storageTableName: tableStore)
                    .CreateLogger();
                 }
-            });
+            })
+            .UseSerilog();
     }
 }

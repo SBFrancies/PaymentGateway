@@ -48,7 +48,6 @@ namespace PaymentGateway.Merchant
             .ConfigureWebHostDefaults(webBuilder =>
             {
                 webBuilder.UseStartup<Startup>();
-                webBuilder.UseSerilog();
             })
             .ConfigureAppConfiguration((ctx, builder) =>
             {
@@ -74,7 +73,8 @@ namespace PaymentGateway.Merchant
                    .WriteTo.AzureTableStorage(tableStoreConnectionString, storageTableName: tableStore)
                    .CreateLogger();
                 }
-            });
+            })
+            .UseSerilog();
     }
 }
 

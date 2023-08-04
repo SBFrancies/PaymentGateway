@@ -72,7 +72,8 @@ namespace PaymentGateway.Api
             })
             .ConfigureWebHostDefaults(webBuilder =>
             {
-                webBuilder.UseSerilog().UseStartup<Startup>();
-            });
+                webBuilder.UseStartup<Startup>();
+            })
+            .UseSerilog();
     }
 }
