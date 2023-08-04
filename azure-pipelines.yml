@@ -46,7 +46,7 @@ stages:
     steps:
     - task: Docker@2
       inputs:
-        containerRegistry: 'PaymentGateway'
+        containerRegistry: '48bc4911-7e0a-4263-892a-e4b2bddf9f7e'
         repository: 'paymentgateway-api'
         command: 'buildAndPush'
         Dockerfile: '$(Build.SourcesDirectory)/ApiDockerfile'
@@ -64,7 +64,7 @@ stages:
     steps:
     - task: Docker@2
       inputs:
-        containerRegistry: 'PaymentGateway'
+        containerRegistry: '48bc4911-7e0a-4263-892a-e4b2bddf9f7e'
         repository: 'paymentgateway-merchant'
         command: 'buildAndPush'
         Dockerfile: '$(Build.SourcesDirectory)/MerchantDockerfile'
@@ -82,7 +82,7 @@ stages:
     steps:
     - task: Docker@2
       inputs:
-        containerRegistry: 'PaymentGateway'
+        containerRegistry: '48bc4911-7e0a-4263-892a-e4b2bddf9f7e'
         repository: 'paymentgateway-bank'
         command: 'buildAndPush'
         Dockerfile: '$(Build.SourcesDirectory)/BankDockerfile'
