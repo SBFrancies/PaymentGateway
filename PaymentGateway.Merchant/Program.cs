@@ -66,7 +66,7 @@ namespace PaymentGateway.Merchant
                     Log.Logger = new LoggerConfiguration()
                    .Enrich.FromLogContext()
                    .WriteTo.Console()
-                   .WriteTo.AzureTableStorage(tableStoreConnectionString, tableStore)
+                   .WriteTo.AzureTableStorage(tableStoreConnectionString, storageTableName: tableStore)
                    .CreateLogger();
                 }
             })

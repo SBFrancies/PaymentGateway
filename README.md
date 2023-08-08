@@ -44,7 +44,7 @@ The API project consists of the following components:
 1) A RESTful JSON over HTTP API for making and retreiving payments
 2) A backing SQL server store for persisting payment details
 3) Azure table storage for storing logs
-4) A Redis cache for storing payment event information
+4) Azure CosmosDB for storing payment event information
 5) An OpenIDConnent (OIDC) compliant identity provider - in the test project Azure AD B2C is used
 6) Azure KeyVault for storing secret configuration data
 
@@ -98,3 +98,5 @@ Password: WE45wSxY
 4) Improve error handling logic - probably a middleware based solution
 
 5) Better solution for local running
+
+6) Write other event store providers
