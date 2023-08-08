@@ -29,7 +29,7 @@ namespace PaymentGateway.Api.Services
         {
             using var cosmosClient = new CosmosClient(ConnectionString);
             var database = await cosmosClient.CreateDatabaseIfNotExistsAsync(DatabaseName);
-            var container = database.Database.GetContainer(ContainerName);
+            var container = await database.Database.CreateContainerIfNotExistsAsync(new ContainerProperties(ContainerName, "Id"));
             var paymentEvent = new PaymentEvent
             {
                 Id = id,
@@ -37,7 +37,7 @@ namespace PaymentGateway.Api.Services
                 TimeStamp = Clock.UtcNow,
             };
 
-            _ = await container.CreateItemAsync(paymentEvent, new PartitionKey(id.ToString()));
+            _ = await container.Container.CreateItemAsync(paymentEvent, new PartitionKey(id.ToString()));
         }
 
         public async Task<IEnumerable<PaymentEvent>> GetPaymentEventsAsync(Guid id)
