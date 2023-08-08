@@ -53,7 +53,8 @@ The API project consists of the following components:
 ```
 CREATE TABLE Payments
 (
-Id UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+Id UNIQUEIDENTIFIER NOT NULL PRIMARY KEY NONCLUSTERED,
+RowIndex INT NOT NULL IDENTITY,
 DateCreated DATETIMEOFFSET NOT NULL DEFAULT GETUTCDATE(),
 CreatedBy VARCHAR(200) NOT NULL,
 Amount DECIMAL(20,8) NOT NULL,
@@ -65,17 +66,19 @@ ExpiryYear SMALLINT NOT NULL,
 Reference VARCHAR(50),
 BankCode VARCHAR(100)
 )
+
+CREATE CLUSTERED INDEX IX_Payments ON Payments(RowIndex)
 ```
 
 ## Dev environment
 
 Each of the three web projects are hosted in an Azure dev environment. The services are deployed as Azure App Services for containers using a CI/CD pipeline. These are located at:
 
-1) Payment Gateway API: https://paymentgatewaychallenge-api.azurewebsites.net/swagger
+1) Payment Gateway API: https://wa-payment-gateway-api.azurewebsites.net/swagger
 
-2) Bank Simulator API: https://paymentgatewaychallenge-bank.azurewebsites.net/swagger
+2) Bank Simulator API: https://wa-payment-gateway-bank.azurewebsites.net/swagger
 
-3) Merchant: https://paymentgatewaychallenge-merchant.azurewebsites.net/
+3) Merchant: https://wa-payment-gateway-merchant.azurewebsites.net/
 
 The Payment Gateway API and mock Bank API can be tested via their Open API (swagger) UI pages. The Merchant UI can also be used for testing.
 
@@ -86,14 +89,12 @@ Password: WE45wSxY
 
 ## If I had more time / Future changes
 
-1) Add StyleCop or some other static code analysis tool
+1) Use something better than Azure Table Storage to be able to persist structured logs, maybe Seq or GreyLog
 
-2) Add SAST and/or DAST scans to the deployment pipeline
+2) Use Terraform or Pulumi or some other infrastructure as code to to build and tear down the infrastructure
 
-3) Upgrade the projects to .Net 6
+3) Add endpoints for other types of payment like Bank Transfers
 
-4) Use something better than Azure Table Storage to be able to persist structured logs, maybe Seq or GreyLog
+4) Improve error handling logic - probably a middleware based solution
 
-5) Use Terraform or Pulumi or some other infrastructure as code to to build and tear down the infrastructure
-
-6) Add endpoints for other types of payment like Bank Transfers
+5) Better solution for local running
