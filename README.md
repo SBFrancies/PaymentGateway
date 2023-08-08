@@ -8,7 +8,7 @@ A solution containing a Payment Gateway API to make and retrieve payments. Teh s
 1) .Net 7.0
 2) SQL Server
 3) An OpenIdConnect compliant identity provider (e.g. Azure AD B2C)
-4) Redis cache
+4) Cosmos DB
 5) Azure key vault (optional)
 6) Azure table storage (optional)
 
@@ -84,8 +84,13 @@ The Payment Gateway API and mock Bank API can be tested via their Open API (swag
 
 ### Test credentials:
 
+1) 
 Username: TestUser1@paymentgatewayad.onmicrosoft.com
 Password: WE45wSxY
+
+2)
+Username: TestUser2@paymentgatewayad.onmicrosoft.com
+Password: 4q*v^%FxMnKUnfh&
 
 ## If I had more time / Future changes
 
