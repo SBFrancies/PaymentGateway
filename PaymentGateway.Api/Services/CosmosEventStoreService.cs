@@ -29,7 +29,7 @@ namespace PaymentGateway.Api.Services
         {
             using var cosmosClient = new CosmosClient(ConnectionString);
             var database = await cosmosClient.CreateDatabaseIfNotExistsAsync(DatabaseName);
-            var container = await database.Database.CreateContainerIfNotExistsAsync(new ContainerProperties(ContainerName, "Id"));
+            var container = await database.Database.CreateContainerIfNotExistsAsync(new ContainerProperties(ContainerName, "/Id"));
             var paymentEvent = new PaymentEvent
             {
                 Id = id,
@@ -44,12 +44,12 @@ namespace PaymentGateway.Api.Services
         {
             using var cosmosClient = new CosmosClient(ConnectionString);
             var database = await cosmosClient.CreateDatabaseIfNotExistsAsync(DatabaseName);
-            var container = database.Database.GetContainer(ContainerName);
-            
+            var container = await database.Database.CreateContainerIfNotExistsAsync(new ContainerProperties(ContainerName, "/Id"));
+
             var query = new QueryDefinition($"SELECT * FROM {ContainerName} c WHERE c.Id = @ID")
                             .WithParameter("@ID", id);
 
-            using var feed = container.GetItemQueryIterator<PaymentEvent>(query);
+            using var feed = container.Container.GetItemQueryIterator<PaymentEvent>(query);
 
             var events = new List<PaymentEvent>();
 
