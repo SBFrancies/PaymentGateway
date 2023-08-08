@@ -22,7 +22,7 @@ namespace PaymentGateway.IntegrationTests.FakeServices
 
             _eventStore[id].Add(new PaymentEvent
             {
-                Id = id,
+                PaymentId = id,
                 Status = key,
                 TimeStamp = DateTimeOffset.UtcNow,
             });

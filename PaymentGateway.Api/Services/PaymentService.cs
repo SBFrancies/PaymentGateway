@@ -74,24 +74,24 @@ namespace PaymentGateway.Api.Services
             entity.Id = id;
 
             _ = await PaymentDataAccess.SaveNewPaymentAsync(entity);
-            _ = EventStore.CreatePaymentEventAsync(id, PaymentStatus.Uploaded);
+            await EventStore.CreatePaymentEventAsync(id, PaymentStatus.Uploaded);
 
             var valid = Validator.Validate(request);
 
             if(!valid.IsValid)
             {
-                _ = EventStore.CreatePaymentEventAsync(id, PaymentStatus.FailedValidation);
+                await EventStore.CreatePaymentEventAsync(id, PaymentStatus.FailedValidation);
                 throw new ValidationException(valid.Errors);
             }
 
             var bankApiRequest = ToBankApiMapper.Map(request);
 
-            _ = EventStore.CreatePaymentEventAsync(id, PaymentStatus.Processing);
+            await EventStore.CreatePaymentEventAsync(id, PaymentStatus.Processing);
             var apiResult = await BankApi.MakeBankPaymentAsync(bankApiRequest);
 
             if(apiResult == null)
             {
-                _ = EventStore.CreatePaymentEventAsync(id, PaymentStatus.FailedAtBank);
+                await EventStore.CreatePaymentEventAsync(id, PaymentStatus.FailedAtBank);
 
                 return new CreatePaymentResponse
                 {
@@ -104,13 +104,13 @@ namespace PaymentGateway.Api.Services
 
             if(apiResult.Success)
             {
-                _ = EventStore.CreatePaymentEventAsync(id, PaymentStatus.Success);
+                await EventStore.CreatePaymentEventAsync(id, PaymentStatus.Success);
                 await PaymentDataAccess.UpdatePaymentAsync(id, apiResult.Message);
             }
             else
             {
                 Logger.LogWarning($"Bank payment failed for payment ID {id}");
-                _ = EventStore.CreatePaymentEventAsync(id, PaymentStatus.FailedAtBank);
+                await EventStore.CreatePaymentEventAsync(id, PaymentStatus.FailedAtBank);
             }
 
             return new CreatePaymentResponse
