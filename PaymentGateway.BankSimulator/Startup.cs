@@ -124,7 +124,7 @@ namespace PaymentGateway.BankSimulator
                         [HealthStatus.Degraded] = (int)HttpStatusCode.OK,
                         [HealthStatus.Unhealthy] = (int)HttpStatusCode.ServiceUnavailable,
                     },
-                }); ;
+                }).AllowAnonymous();
             });
         }
     }
