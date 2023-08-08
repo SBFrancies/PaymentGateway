@@ -58,6 +58,12 @@ namespace PaymentGateway.Merchant.Apis
             };
 
             var response = await HttpClient.SendAsync(message);
+            
+            if(!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
             var responseBody = await response.Content.ReadAsStringAsync();
 
             try

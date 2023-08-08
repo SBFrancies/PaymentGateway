@@ -44,7 +44,7 @@ namespace PaymentGateway.Api.Services
         {
             using var cosmosClient = new CosmosClient(ConnectionString);
             var database = await cosmosClient.CreateDatabaseIfNotExistsAsync(DatabaseName);
-            var container = await database.Database.CreateContainerIfNotExistsAsync(new ContainerProperties(ContainerName, "/Id"));
+            var container = await database.Database.CreateContainerIfNotExistsAsync(new ContainerProperties(ContainerName, "/paymentId"));
 
             var query = new QueryDefinition($"SELECT * FROM {ContainerName} c WHERE c.paymentId = @PAYMENTID")
                             .WithParameter("@PAYMENTID", id);
