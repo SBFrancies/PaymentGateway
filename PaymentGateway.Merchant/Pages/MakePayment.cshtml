@@ -62,4 +62,11 @@
     </div>
     </div>
     <input type="submit" value="Make Payment" onclick="this.form.submit(); this.disabled=true; this.value='Payment procesing'">
+
+    @if(Model.ErrorMessage != null)
+    {
+        <div class="alert alert-danger">
+            <strong>Error</strong> @Model.ErrorMessage
+        </div>
+    }
 </form>

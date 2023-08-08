@@ -66,6 +66,9 @@ namespace PaymentGateway.Merchant.Pages
         [RegularExpression("^[a-zA-Z0-9 ]{0,50}$")]
         public string Reference { get; set; }
 
+        [BindProperty]        
+        public string ErrorMessage { get; set; }
+
         public void OnGet()
         {
         }
@@ -90,9 +93,20 @@ namespace PaymentGateway.Merchant.Pages
                 Cvv = Cvv,          
             };
 
-            var result = await GatewayApi.PostAsync(createRequest);
+            try
+            {
+                ErrorMessage = null;
 
-            return RedirectToPage("Payment", new {id = result.PaymentId});
+                var result = await GatewayApi.PostAsync(createRequest);
+
+                return RedirectToPage("Payment", new { id = result.PaymentId });
+            }
+
+            catch(Exception exception) when (exception is not MicrosoftIdentityWebChallengeUserException)
+            {
+                ErrorMessage = exception.Message;
+                return Page();
+            }
         }
     }
 }

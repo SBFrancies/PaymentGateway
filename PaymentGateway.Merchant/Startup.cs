@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Identity.Client;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
 using PaymentGateway.Merchant.Apis;
@@ -100,6 +101,20 @@ namespace PaymentGateway.Merchant
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.Use((context, next) =>
+            {
+                try
+                {
+                    return next(context);
+                }
+
+                catch (MicrosoftIdentityWebChallengeUserException)
+                {
+                    context.Response.Redirect("/");
+                    return next(context);
+                }
+            });
 
             app.UseEndpoints(endpoints =>
             {

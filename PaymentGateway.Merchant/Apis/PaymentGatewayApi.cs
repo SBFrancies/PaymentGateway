@@ -33,6 +33,11 @@ namespace PaymentGateway.Merchant.Apis
 
             var response = await HttpClient.GetAsync($"Payment/{id}");
 
+            if(!response.IsSuccessStatusCode)
+            {
+                return null;
+            }
+
             var responseBody = await response.Content.ReadAsStringAsync();
 
             try
