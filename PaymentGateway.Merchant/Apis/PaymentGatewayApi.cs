@@ -18,7 +18,6 @@ namespace PaymentGateway.Merchant.Apis
         private HttpClient HttpClient { get; }
         private MerchantSettings Settings { get; }
 
-
         public PaymentGatewayApi(ITokenAcquisition tokenAcquisition, IHttpClientFactory clientFactory, MerchantSettings settings)
         {
             TokenAcquisition = tokenAcquisition ?? throw new ArgumentNullException(nameof(tokenAcquisition));

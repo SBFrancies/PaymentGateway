@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PaymentGateway.Library.Models.Settings;
+using System;
 
 namespace PaymentGateway.Merchant.Models.Settings
 {
@@ -11,6 +12,11 @@ namespace PaymentGateway.Merchant.Models.Settings
                 throw new ArgumentNullException(nameof(appsettings));
             }
 
+            if (appsettings.TableStorage != null)
+            {
+                TableStorage = new TableStorageSettings(appsettings.TableStorage);
+            }
+
             PaymentGateway = new PaymentGatewaySettings(appsettings.PaymentGateway);
             AzureAdB2C = new AzureAdB2CSettings(appsettings.AzureAdB2C);
         }
@@ -18,5 +24,7 @@ namespace PaymentGateway.Merchant.Models.Settings
         public PaymentGatewaySettings PaymentGateway { get; }
 
         public AzureAdB2CSettings AzureAdB2C { get; }
+
+        public TableStorageSettings TableStorage { get; }
     }
 }

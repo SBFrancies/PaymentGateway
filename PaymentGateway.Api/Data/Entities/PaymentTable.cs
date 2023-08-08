@@ -6,6 +6,8 @@ namespace PaymentGateway.Api.Data.Entities
     {
         public Guid Id { get; set; }
 
+        public int RowIndex { get; set; }
+
         public DateTimeOffset DateCreated { get; set; }
 
         public string CreatedBy { get; set; }

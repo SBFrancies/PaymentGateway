@@ -8,7 +8,7 @@ namespace PaymentGateway.Api.Interface
 {
     public interface IEventStore
     {
-        Task CreatePaymentEventAsync(Guid id, PaymentStatus key);
+        Task CreatePaymentEventAsync(Guid id, PaymentStatus status);
 
         Task<IEnumerable<PaymentEvent>> GetPaymentEventsAsync(Guid id);
     }

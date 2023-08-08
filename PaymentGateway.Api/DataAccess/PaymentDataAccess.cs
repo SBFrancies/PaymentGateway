@@ -33,13 +33,8 @@ namespace PaymentGateway.Api.DataAccess
         {
             await using var context = ContextFactory();
 
-            var payment = await context.Payments.FirstOrDefaultAsync();
-
-            if(payment == null)
-            {
-                throw new Exception("Payment not found");
-            }
-
+            var payment = await context.Payments.FirstOrDefaultAsync() ?? throw new Exception("Payment not found");
+            
             payment.BankCode = bankCode;
 
             await context.SaveChangesAsync();

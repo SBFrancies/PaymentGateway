@@ -1,8 +1,6 @@
+using Azure.Identity;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Azure.KeyVault;
-using Microsoft.Azure.Services.AppAuthentication;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.AzureKeyVault;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Serilog;
@@ -56,9 +54,7 @@ namespace PaymentGateway.BankSimulator
 
                 if (!string.IsNullOrEmpty(keyVault))
                 {
-                    var tokenProvider = new AzureServiceTokenProvider();
-                    var kvClient = new KeyVaultClient((authority, resource, scope) => tokenProvider.KeyVaultTokenCallback(authority, resource, scope));
-                    builder.AddAzureKeyVault(keyVault, kvClient, new DefaultKeyVaultSecretManager());
+                    builder.AddAzureKeyVault(new Uri(keyVault), new DefaultAzureCredential());
                     config = builder.Build();
                 }
 
@@ -70,7 +66,7 @@ namespace PaymentGateway.BankSimulator
                     Log.Logger = new LoggerConfiguration()
                    .Enrich.FromLogContext()
                    .WriteTo.Console()
-                   .WriteTo.AzureTableStorage(tableStoreConnectionString, storageTableName: tableStore)
+                   .WriteTo.AzureTableStorage(tableStoreConnectionString, tableStore)
                    .CreateLogger();
                 }
             })

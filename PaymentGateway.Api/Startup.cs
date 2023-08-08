@@ -117,7 +117,7 @@ namespace PaymentGateway.Api
             services.AddSingleton<IBankApi, BankApiService>();
             services.AddSingleton<ICardNumberHider, CardNumberHider>();
             services.AddSingleton<IIdentifierGenerator, IdentifierGenerator>();
-            services.AddSingleton<IEventStore, EventStoreService>();
+            services.AddSingleton<IEventStore, CosmosEventStoreService>();
             services.AddSingleton<IPaymentDataAccess, PaymentDataAccess>();
             services.AddSingleton<IBankStatusHolder, BankApiStatusService>();
             services.AddSingleton<IValidator<CreatePaymentRequest>, PaymentValidator>();

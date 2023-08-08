@@ -20,8 +20,9 @@ namespace PaymentGateway.Api.Data
             modelBuilder.Entity<PaymentTable>(a =>
             {
                 a.ToTable("Payments", Schema);
-                a.HasKey(a => a.Id);
+                a.HasKey(a => a.Id).IsClustered(false);
                 a.Property(a => a.Id).ValueGeneratedNever();
+                a.Property(a => a.RowIndex).UseIdentityColumn();
                 a.Property(a => a.DateCreated).HasDefaultValueSql("GETUTCDATE()");
                 a.Property(a => a.CurrencyCode).HasMaxLength(10).IsRequired();
                 a.Property(a => a.CardNumber).HasMaxLength(30).IsRequired();
@@ -30,6 +31,7 @@ namespace PaymentGateway.Api.Data
                 a.Property(a => a.CreatedBy).HasMaxLength(200).IsRequired();
                 a.Property(a => a.BankCode).HasMaxLength(30);
                 a.Property(a => a.Amount).HasColumnType("DECIMAL(20,8)");
+                a.HasIndex(a => a.RowIndex).IsClustered(true);
             });
         }
 

@@ -25,9 +25,9 @@ namespace PaymentGateway.BankSimulator.Controllers
         {
             try
             {
-                var result = await PaymentProcessor.ProcessPaymentAsync(request);
+                var (code, response) = await PaymentProcessor.ProcessPaymentAsync(request);
 
-                return StatusCode((int)result.code, result.response);
+                return StatusCode((int)code, response);
             }
             catch (Exception exception)
             {

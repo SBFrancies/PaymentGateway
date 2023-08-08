@@ -1,6 +1,5 @@
 ﻿using PaymentGateway.Api.Interface;
 using PaymentGateway.Api.Models.BankApi;
-using System;
 using System.Threading.Tasks;
 
 namespace PaymentGateway.IntegrationTests.FakeServices
